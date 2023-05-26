@@ -87,9 +87,9 @@ const CartContainer = styled.span`
 
 const NavLinks = [
   { href: "#", title: "Home" },
-  { href: "#", title: "About" },
-  { href: "#", title: "Services" },
-  { href: "#", title: "Contact" },
+  { href: "#", title: "Products" },
+  { href: "#", title: "Categories" },
+  { href: "#", title: "Account", loggedIn: true },
 ];
 
 const Header = () => {
@@ -114,12 +114,24 @@ const Header = () => {
       <DesktopNav>
         <Container>
           <Link href={""}>Logo</Link>
-          <nav>
-            {NavLinks.map((link) => (
-              <NavItem key={link.title} href={link.href}>
-                {link.title}
-              </NavItem>
-            ))}
+          <nav style={{ display: "flex" }}>
+            {NavLinks.map((link) => {
+              if (link.loggedIn) {
+                if (session?.user.email) {
+                  return (
+                    <NavItem key={link.title} href={link.href}>
+                      {link.title}
+                    </NavItem>
+                  );
+                }
+              } else {
+                return (
+                  <NavItem key={link.title} href={link.href}>
+                    {link.title}
+                  </NavItem>
+                );
+              }
+            })}
             {!session?.user.email ? (
               <NavItem href="#" onClick={openModal}>
                 Login

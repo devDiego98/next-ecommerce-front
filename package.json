@@ -13,6 +13,8 @@
     "@emotion/styled": "^11.11.0",
     "@mui/base": "^5.0.0-beta.2",
     "@mui/joy": "^5.0.0-alpha.81",
+    "@mui/material": "^5.13.2",
+    "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.4.0",
     "babel-plugin-styled-components": "^2.1.1",
     "eslint": "8.40.0",
@@ -23,6 +25,7 @@
     "next-auth": "^4.22.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-redux": "^8.0.5",
     "styled-components": "^6.0.0-rc.1",
     "yup": "^1.2.0"
   }

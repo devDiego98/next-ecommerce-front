@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import styled from "styled-components";
 import { signIn } from "next-auth/react";
-
+import { useRouter } from "next/router";
 const LoginForm = styled(Form)`
   display: flex;
   flex-direction: column;
@@ -56,10 +56,14 @@ const validationSchema = Yup.object().shape({
 });
 
 const Login = ({ setForm }) => {
+  const router = useRouter();
   const handleSubmit = async (values, { setSubmitting }) => {
     let submitValues = { ...values, login: true, redirect: false };
     let res = await signIn("credentials", submitValues);
-    console.log(res);
+    console.log(res.status);
+    if (res.status >= 200 && res.status <= 300) {
+      router.reload();
+    }
     setSubmitting(false);
   };
 
