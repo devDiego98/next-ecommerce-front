@@ -12,6 +12,7 @@ const FlexContainer = styled.div`
 const FlexItem = styled.div`
   flex: 0 0 ${(props) => `${100 / props.itemsperrow}%`};
   display: flex;
+  justify-content: center;
 `;
 
 const CardRow = ({ itemsperrow }) => {

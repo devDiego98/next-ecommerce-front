@@ -2,21 +2,29 @@ import React from "react";
 import styled from "@emotion/styled";
 import { Rating } from "@mui/material";
 const CardContainer = styled.div`
-  width: 350px;
+  width: 250px;
   margin: 20px;
   border-radius: 8px;
   overflow: hidden;
   border: 1px solid #e0e1dd;
+  display: flex;
+  flex-direction: column;
 `;
 const CardContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
   padding: 8px 16px;
+  flex: 1;
+  h2 {
+    font-size: 20px;
+  }
+  h3 {
+    font-size: 16px;
+  }
 `;
 const ImageContainer = styled.div`
   min-width: 200px;
-  min-height: 200px;
   position: relative;
 
   img {
@@ -40,8 +48,6 @@ const ImageContainer = styled.div`
 const AddToCartBtn = styled.button`
   padding: 10px 20px;
   border-radius: 16px;
-  align-self: center;
-  margin-bottom: 16px;
   background: transparent;
   border: 1px solid #415a77;
   &:hover {
@@ -50,6 +56,12 @@ const AddToCartBtn = styled.button`
     cursor: pointer;
     border: 1px solid #1b263b;
   }
+`;
+const ButtonContainer = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
 `;
 const ProductCard = ({ cardInfo }) => {
   const rating = [1, 1, 1, 1];
@@ -77,7 +89,9 @@ const ProductCard = ({ cardInfo }) => {
         <h2>{cardInfo?.name}</h2>
         <h3>{cardInfo?.price}</h3>
         <Rating name="read-only" value={2.5} readOnly precision={0.5} />
-        <AddToCartBtn>Add to Cart</AddToCartBtn>
+        <ButtonContainer>
+          <AddToCartBtn>Add to Cart</AddToCartBtn>
+        </ButtonContainer>
       </CardContent>
     </CardContainer>
   );

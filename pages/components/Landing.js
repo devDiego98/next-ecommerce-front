@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import axios from "axios";
 import { setAllProducts } from "@/slices/productsSlice";
+import LandingFirstSection from "./LandingFirstSection";
 
 const Landing = () => {
   const dispatch = useDispatch();
@@ -23,9 +24,8 @@ const Landing = () => {
     <main>
       <Header />
       <Featured />
-      <div style={{ display: "flex", gap: "20px", justifyContent: "center" }}>
-        <CardRow itemsperrow={3} />
-      </div>
+      <LandingFirstSection />
+      {/* <CardRow itemsperrow={3} /> */}
     </main>
   );
 };
