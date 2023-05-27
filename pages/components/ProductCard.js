@@ -71,7 +71,7 @@ const ProductCard = ({ cardInfo }) => {
             />
           </svg>
         </button>
-        <img src="https://dawid-next-ecommerce.s3.amazonaws.com/1679151719649.png" />
+        <img src="https://diego-next-ecommerce.s3.us-east-2.amazonaws.com/1679151719649.png" />
       </ImageContainer>
       <CardContent>
         <h2>{cardInfo?.name}</h2>

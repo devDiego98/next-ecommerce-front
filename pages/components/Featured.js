@@ -49,19 +49,21 @@ const Center = styled.div`
     }
   }
   @media only screen and (max-width: 1500px) {
-    img {
-      height: auto;
-      width: 80vw;
-    }
     gap: 50px;
     margin-top: 50px;
   }
 `;
 
+const ImageCont = styled.div`
+  position: relative;
+  width: 80vw;
+  height: 400px;
+  aspect-ratio: 200/111;
+  @media only screen and (max-width: 1500px) {
+    height: auto;
+  }
+`;
 const Featured = () => {
-  const myLoader = ({ src }) => {
-    return `https://dawid-next-ecommerce.s3.amazonaws.com/1679151719649.png`;
-  };
   return (
     <div>
       <Bg>
@@ -87,13 +89,14 @@ const Featured = () => {
                 <button>Add to Cart</button>
               </BtnContainer>
             </div>
-            <Image
-              alt="mac laptop"
-              loader={myLoader}
-              width={800}
-              height={400}
-              src="https://dawid-next-ecommerce.s3.amazonaws.com/1679151719649.png"
-            />
+            <ImageCont>
+              <Image
+                alt="mac laptop"
+                src="https://diego-next-ecommerce.s3.us-east-2.amazonaws.com/1679151719649.png"
+                fill={true}
+                priority
+              />
+            </ImageCont>
           </Center>
         </Container>
       </Bg>

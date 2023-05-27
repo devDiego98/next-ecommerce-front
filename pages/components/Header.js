@@ -111,7 +111,7 @@ const Header = () => {
       <DesktopNav>
         <Container>
           <Link href={"#"}>Logo</Link>
-          {/* <nav style={{ display: "flex" }}>
+          <nav style={{ display: "flex" }}>
             {NavLinks.map((link) => {
               if (link.loggedIn) {
                 if (session?.user.email) {
@@ -155,7 +155,7 @@ const Header = () => {
                 </NavItem>
               </CartContainer>
             )}
-          </nav> */}
+          </nav>
           <Hamburger onClick={handleToggle}>
             <MenuIcon>
               <svg
