@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "./Header";
 import Featured from "./Featured";
+import Footer from "./Footer";
 import CardRow from "./CardRow";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -25,7 +26,7 @@ const Landing = () => {
       <Header />
       <Featured />
       <LandingFirstSection />
-      {/* <CardRow itemsperrow={3} /> */}
+      <Footer />
     </main>
   );
 };
