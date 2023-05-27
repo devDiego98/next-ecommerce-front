@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import ProductCard from "./ProductCard";
+import { useSelector } from "react-redux";
 
 const FlexContainer = styled.div`
   display: flex;
@@ -9,15 +10,17 @@ const FlexContainer = styled.div`
 `;
 
 const FlexItem = styled.div`
-  flex: 0 0 ${(props) => `${100 / props.itemsPerRow}%`};
+  flex: 0 0 ${(props) => `${100 / props.itemsperrow}%`};
+  display: flex;
 `;
 
-const CardRow = ({ itemsPerRow, cards }) => {
+const CardRow = ({ itemsperrow }) => {
+  const products = useSelector((state) => state.products.value);
+
   return (
     <FlexContainer>
-      {cards.map((card, index) => (
-        <FlexItem key={index} itemsPerRow={itemsPerRow}>
-          {/* Render your card component here */}
+      {products.map((card, index) => (
+        <FlexItem key={index} itemsperrow={itemsperrow}>
           <ProductCard cardInfo={card} />
         </FlexItem>
       ))}

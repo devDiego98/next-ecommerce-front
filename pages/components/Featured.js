@@ -70,17 +70,17 @@ const Featured = () => {
             <div className="left">
               <Title>Pro anywhere</Title>
               <p>
-                "Experience the ultimate in performance, speed, and power with
-                the newest MacBook Pro. Equipped with Apple's latest M1 chip,
+                Experience the ultimate in performance, speed, and power with
+                the newest MacBook Pro. Equipped with Apples latest M1 chip,
                 this revolutionary laptop delivers lightning-fast processing,
                 seamless multitasking, and exceptional battery life. With a
                 stunning Retina display, advanced graphics, and studio-quality
                 microphones and speakers, the MacBook Pro offers a truly
                 immersive experience for work, play, and everything in between.
-                Whether you're a creative professional, a power user, or a
+                Whether youre a creative professional, a power user, or a
                 student on the go, the MacBook Pro is the perfect tool to help
-                you achieve your goals. Don't miss out on the latest innovation
-                from Apple - order your MacBook Pro today!"
+                you achieve your goals. Dont miss out on the latest innovation
+                from Apple - order your MacBook Pro today!
               </p>
               <BtnContainer>
                 <button>Read More</button>

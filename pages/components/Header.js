@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Link from "next/link";
 import LoginForm from "./LoginForm";
-// import { Modal, ModalDialog, ModalClose, Typography } from "@mui/base";
 import { Modal, ModalDialog, ModalClose } from "@mui/joy";
 import Register from "./RegisterForm";
 import { signOut, useSession } from "next-auth/react";
+
 const Nav = styled.nav`
   display: flex;
   flex-direction: column;
@@ -105,15 +105,12 @@ const Header = () => {
   const openModal = () => {
     setShowLoginModal(true);
   };
-  useEffect(() => {
-    console.log(session);
-  }, [session]);
 
   return (
     <>
       <DesktopNav>
         <Container>
-          <Link href={""}>Logo</Link>
+          <Link href={"#"}>Logo</Link>
           <nav style={{ display: "flex" }}>
             {NavLinks.map((link) => {
               if (link.loggedIn) {
