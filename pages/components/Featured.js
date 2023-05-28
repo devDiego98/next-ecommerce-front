@@ -19,6 +19,10 @@ const BtnContainer = styled.div`
     border-radius: 8px;
     height: 50px;
     width: 200px;
+    @media only screen and (max-width: 768px) {
+      width: 150px;
+      height: 40px;
+    }
   }
 `;
 const Title = styled.h1`
@@ -39,6 +43,9 @@ const Center = styled.div`
     flex-direction: column;
     align-self: center;
     gap: 20px;
+    p {
+      max-width: 80vw;
+    }
   }
   @media only screen and (max-width: 1500px) {
     flex-direction: column;

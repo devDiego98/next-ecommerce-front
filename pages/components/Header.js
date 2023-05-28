@@ -122,7 +122,7 @@ const Header = () => {
       <Drawer
         anchor={"left"}
         open={showLeftDrawer}
-        onClose={() => setShowLoginModal(false)}
+        onClose={() => setShowLeftDrawer(false)}
       >
         <DrawerContent>
           <Navbar session={session} openModal={openModal}></Navbar>
