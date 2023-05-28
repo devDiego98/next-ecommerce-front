@@ -23,10 +23,8 @@ const Landing = () => {
 
   return (
     <main>
-      <Header />
       <Featured />
       <LandingFirstSection />
-      <Footer />
     </main>
   );
 };
