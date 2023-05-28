@@ -80,17 +80,12 @@ const DrawerContent = styled.span`
 
 const Header = () => {
   const { data: session } = useSession();
-  const [isOpen, setIsOpen] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [form, setForm] = useState("login");
   const [showLeftDrawer, setShowLeftDrawer] = useState(false);
-  useEffect(() => {
-    console.log(showLeftDrawer);
-  }, [showLeftDrawer]);
 
   const openModal = () => {
     if (showLeftDrawer === true) {
-      console.log("trying");
       setShowLeftDrawer(false);
     }
     setShowLoginModal(true);

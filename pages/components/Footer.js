@@ -120,7 +120,9 @@ export default function Footer() {
         <StyledSeparatedRow>
           <LinkContainer>
             {links.map((link) => (
-              <Link href={link.href}>{link.text}</Link>
+              <Link key={link.href + link.text} href={link.href}>
+                {link.text}
+              </Link>
             ))}
           </LinkContainer>
           <Row>
