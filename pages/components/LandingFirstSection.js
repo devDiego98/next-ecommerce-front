@@ -38,6 +38,10 @@ const SectionTwo = styled.div`
     transition: 2s;
     filter: invert(1);
   }
+  &:not(:hover) {
+    transition: 2s;
+    filter: invert(0);
+  }
   img {
     z-index: -1;
   }
