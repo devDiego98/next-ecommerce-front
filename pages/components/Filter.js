@@ -15,8 +15,21 @@ const StyledSelectTag = styled(Select)`
   min-width: 200px;
   margin-bottom: 16px;
 `;
+const StyledPropertyContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 24px;
+  label {
+    margin-left: 10px;
+    display: flex;
+    gap: 8px;
+  }
+`;
 
 const Filter = ({ showFilterDrawer, setShowFilterDrawer }) => {
+  const [propertyFilters, setPropertyFilters] = useState();
   const [allCategories, setAllCategories] = useState([]);
   const categories = useSelector((state) => state.categories.categories);
   const subCategories = useSelector((state) => state.categories.subCategories);
@@ -67,13 +80,32 @@ const Filter = ({ showFilterDrawer, setShowFilterDrawer }) => {
         "/api/products?categoryIds=" + ids[ids.length - 1]
       );
       const data = await response.json();
+      handlePropertyFilters(data);
       dispatch(setAllProducts(data));
-      console.log(data);
     } catch (error) {
       console.error("Error fetching categories:", error);
     }
   }
 
+  function handlePropertyFilters(products) {
+    let properties = {};
+
+    products.forEach((product) => {
+      if (product.properties) {
+        Object.keys(product?.properties).forEach((key, index) => {
+          if (!properties[key]) {
+            properties[key] = [product.properties[key]];
+          } else {
+            if (!properties[key].includes(product.properties[key])) {
+              properties[key].push(product.properties[key]);
+            }
+          }
+        });
+      }
+    });
+    setPropertyFilters(properties);
+    console.log(properties);
+  }
   return (
     <Drawer
       anchor={"right"}
@@ -109,6 +141,18 @@ const Filter = ({ showFilterDrawer, setShowFilterDrawer }) => {
             </FormControl>
           );
         })}
+        {propertyFilters &&
+          Object?.entries(propertyFilters)?.map(([key, values]) => (
+            <StyledPropertyContainer key={key}>
+              <h3>{key}:</h3>
+              {values.map((value) => (
+                <label key={value}>
+                  <input type="radio" value={value} name={key} />
+                  <span>{value}</span>
+                </label>
+              ))}
+            </StyledPropertyContainer>
+          ))}
         <Button onClick={filterProducts}>Filter Products</Button>
       </FiltersDrawer>
     </Drawer>
