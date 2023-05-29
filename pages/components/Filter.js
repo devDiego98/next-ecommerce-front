@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Button, Drawer } from "@mui/material";
-// import MenuItem from "@mui/joy";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
-// import Select from "@mui/joy";
+import { useDispatch, useSelector } from "react-redux";
 import { Select, MenuItem, FormControl, InputLabel } from "@mui/material";
-
+import { setAllProducts } from "@/slices/productsSlice";
 const FiltersDrawer = styled.div`
   min-width: 40vw;
   display: flex;
@@ -20,11 +18,10 @@ const StyledSelectTag = styled(Select)`
 
 const Filter = ({ showFilterDrawer, setShowFilterDrawer }) => {
   const [allCategories, setAllCategories] = useState([]);
-
-  const [visibleSubCategories, setVisibleSubCategories] = useState([]);
   const categories = useSelector((state) => state.categories.categories);
   const subCategories = useSelector((state) => state.categories.subCategories);
   const [searchCategories, setSearchCategories] = useState([]);
+  const dispatch = useDispatch();
   useEffect(() => {
     setAllCategories([[...categories]]);
   }, [categories]);
@@ -64,12 +61,13 @@ const Filter = ({ showFilterDrawer, setShowFilterDrawer }) => {
   };
 
   async function filterProducts() {
-    let ids = searchCategories.map((cat) => cat._id).join(",");
-    console.log(ids);
-
+    let ids = searchCategories.map((cat) => cat._id);
     try {
-      const response = await fetch("/api/products?categoryIds=" + ids);
+      const response = await fetch(
+        "/api/products?categoryIds=" + ids[ids.length - 1]
+      );
       const data = await response.json();
+      dispatch(setAllProducts(data));
       console.log(data);
     } catch (error) {
       console.error("Error fetching categories:", error);
