@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Button, Drawer } from "@mui/material";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
@@ -33,27 +33,34 @@ const Filter = ({ showFilterDrawer, setShowFilterDrawer }) => {
   const [allCategories, setAllCategories] = useState([]);
   const categories = useSelector((state) => state.categories.categories);
   const subCategories = useSelector((state) => state.categories.subCategories);
+
   const [searchCategories, setSearchCategories] = useState([]);
+  const [parentCategories, setParentCategories] = useState([]);
+
+  const selectFieldValues = useRef([]);
+  const radioFieldValues = useRef([]);
+
   const dispatch = useDispatch();
+
   useEffect(() => {
-    setAllCategories([[...categories]]);
+    let startingCategories = categories.filter(
+      (category) => category.parentCategory.length === 0
+    );
+    setParentCategories(startingCategories);
+    setAllCategories([...[startingCategories]]);
   }, [categories]);
 
   const handleChange = (category, index) => {
+    selectFieldValues.current[index] = category.value;
     if (category.value !== "") {
       let { value: cat } = category;
       cat = JSON.parse(cat);
+      setNewSubCategories(cat._id, index);
 
       let newSearchCategories = [...searchCategories];
       newSearchCategories = newSearchCategories.slice(0, index + 1);
       newSearchCategories[index] = cat;
       setSearchCategories(newSearchCategories);
-
-      let newArr = [...allCategories];
-      newArr = newArr.slice(0, index + 1);
-      let newSubCategories = setNewSubCategories(cat._id);
-      newSubCategories.length > 0 && newArr.push(newSubCategories);
-      setAllCategories(newArr);
     } else {
       let newArr = [...allCategories];
       newArr = newArr.slice(0, index + 1);
@@ -64,21 +71,41 @@ const Filter = ({ showFilterDrawer, setShowFilterDrawer }) => {
       setSearchCategories(newSearchCategories);
     }
   };
-
-  const setNewSubCategories = (id) => {
-    let newSubCategories = [...subCategories];
-    newSubCategories = subCategories.filter(
-      (cat) => cat.parentCategory._id === id
-    );
-    return newSubCategories;
+  const handleRadioChange = (key, value, index) => {
+    radioFieldValues.current[index] = { [key]: value };
+  };
+  const setNewSubCategories = async (id, index) => {
+    let newArr = [...allCategories];
+    newArr = newArr.slice(0, index + 1);
+    setPropertyFilters({});
+    radioFieldValues.current = [];
+    selectFieldValues.current = selectFieldValues.current.slice(0, index + 1);
+    try {
+      const response = await fetch(
+        "/api/categories?fetchChildren=true&id=" + id
+      );
+      const data = await response.json();
+      if (data.length > 0) {
+        setAllCategories((prev) => [...newArr, data]);
+      } else {
+        setAllCategories(newArr);
+      }
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
   };
 
   async function filterProducts() {
     let ids = searchCategories.map((cat) => cat._id);
+    let url = "/api/products?categoryId=" + ids[ids.length - 1];
+    if (radioFieldValues.current.length > 0) {
+      radioFieldValues.current.map((property) => {
+        let entries = [...Object.entries(property)];
+        url += `&properties.${entries[0][0]}=${entries[0][1]}`;
+      });
+    }
     try {
-      const response = await fetch(
-        "/api/products?categoryIds=" + ids[ids.length - 1]
-      );
+      const response = await fetch(url);
       const data = await response.json();
       handlePropertyFilters(data);
       dispatch(setAllProducts(data));
@@ -104,7 +131,13 @@ const Filter = ({ showFilterDrawer, setShowFilterDrawer }) => {
       }
     });
     setPropertyFilters(properties);
-    console.log(properties);
+  }
+  function clearFilters() {
+    setAllCategories([parentCategories]);
+    setSearchCategories([]);
+    setPropertyFilters({});
+    selectFieldValues.current = [];
+    radioFieldValues.current = [];
   }
   return (
     <Drawer
@@ -125,6 +158,7 @@ const Filter = ({ showFilterDrawer, setShowFilterDrawer }) => {
             >
               <InputLabel>Select Category</InputLabel>
               <StyledSelectTag
+                value={selectFieldValues.current[index] || ""}
                 onChange={(res) => handleChange(res.target, index)}
                 label={categoriesSelect.name}
                 labelId={categoriesSelect.name}
@@ -141,19 +175,40 @@ const Filter = ({ showFilterDrawer, setShowFilterDrawer }) => {
             </FormControl>
           );
         })}
+
         {propertyFilters &&
-          Object?.entries(propertyFilters)?.map(([key, values]) => (
-            <StyledPropertyContainer key={key}>
-              <h3>{key}:</h3>
-              {values.map((value) => (
-                <label key={value}>
-                  <input type="radio" value={value} name={key} />
-                  <span>{value}</span>
-                </label>
-              ))}
-            </StyledPropertyContainer>
-          ))}
+          Object?.entries(propertyFilters)?.map(
+            ([objKey, values], propertyIndex) => (
+              <StyledPropertyContainer key={objKey}>
+                <h3>{objKey}:</h3>
+                {values.map((value) => (
+                  <label key={value}>
+                    <input
+                      type="radio"
+                      value={value}
+                      name={objKey}
+                      defaultChecked={
+                        radioFieldValues?.current[propertyIndex] &&
+                        objKey in radioFieldValues?.current[propertyIndex] &&
+                        radioFieldValues?.current[propertyIndex][objKey] ==
+                          value
+                      }
+                      onChange={(ev) =>
+                        handleRadioChange(
+                          objKey,
+                          ev.target.value,
+                          propertyIndex
+                        )
+                      }
+                    />
+                    <span>{value}</span>
+                  </label>
+                ))}
+              </StyledPropertyContainer>
+            )
+          )}
         <Button onClick={filterProducts}>Filter Products</Button>
+        <Button onClick={clearFilters}>Clear Filters</Button>
       </FiltersDrawer>
     </Drawer>
   );

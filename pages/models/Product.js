@@ -4,7 +4,7 @@ const ProductSchema = new Schema({
   desc: String,
   price: { type: Number, required: true },
   images: { type: Array, required: true },
-  category: { type: mongoose.Types.ObjectId },
+  category: { type: [mongoose.Types.ObjectId] },
   properties: { type: Object },
 });
 

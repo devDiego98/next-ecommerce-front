@@ -5,54 +5,41 @@ import Product from "../models/Product";
 export default async function handler(req, res) {
   const { method } = req;
   await mongooseConnect();
+  const urlParams = new URLSearchParams(req.url);
+
+  // Create a new object to store the extracted properties
+  const propertiesObj = {};
+
+  // Iterate over each query parameter
+  urlParams.forEach((value, key) => {
+    // Check if the key starts with 'properties.'
+    if (key.startsWith("properties.")) {
+      const propertyKey = key.substring("properties.".length);
+      propertiesObj[`properties.${propertyKey}`] = value;
+    }
+  });
 
   if (method === "GET") {
-    if (req.query?.id) {
-      res.json(await Product.findOne({ _id: req.query.id }));
-    }
-    if (req.query?.categoryIds) {
-      try {
-        const { categoryIds } = req.query;
-
-        const products = await Product.find({ category: { $in: categoryIds } });
-
-        res.status(200).json(products);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-        res.status(500).json({ error: "Internal Server Error" });
+    try {
+      if (req.query?.id) {
+        const product = await Product.findOne({ _id: req.query.id });
+        return res.json(product);
       }
+
+      if (req.query?.categoryId) {
+        const { categoryId } = req.query;
+        const products = await Product.find({
+          category: categoryId,
+          ...propertiesObj,
+        });
+        return res.status(200).json(products);
+      }
+
+      const products = await Product.find();
+      return res.json(products);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      return res.status(500).json({ error: "Internal Server Error" });
     }
-    res.json(await Product.find());
   }
-
-  // if (method === "POST") {
-  //   const productDoc = await Product.create({
-  //     name: req.body.name,
-  //     desc: req.body.desc,
-  //     price: req.body.price,
-  //     images: req.body.images,
-  //     category: req.body.category,
-  //     properties: req.body.properties,
-  //   });
-  //   res.status(200).json(productDoc);
-  // }
-
-  // if (method === "PUT") {
-  //   const { name, desc, price, _id, images, category, properties } = req.body;
-  //   res.status(200).json(
-  //     await Product.updateOne(_id, {
-  //       name,
-  //       desc,
-  //       price,
-  //       images,
-  //       category,
-  //       properties,
-  //     })
-  //   );
-  // }
-
-  // if (method === "DELETE") {
-  //   const { _id } = req.body;
-  //   res.status(200).json(await Product.deleteOne(_id));
-  // }
 }
