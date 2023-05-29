@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { signOut } from "next-auth/react";
-
+import Link from "next/link";
 const Nav = styled.nav`
   display: flex;
   @media only screen and (max-width: 768px) {
@@ -14,7 +14,7 @@ const Nav = styled.nav`
     }
   }
 `;
-const NavItem = styled.a`
+const NavItem = styled(Link)`
   padding: 1rem;
   text-align: center;
   text-decoration: none;
@@ -32,8 +32,8 @@ const CartContainer = styled.span`
   }
 `;
 const NavLinks = [
-  { href: "#", title: "Home" },
-  { href: "#", title: "Products" },
+  { href: "/", title: "Home" },
+  { href: "/products", title: "Products" },
   { href: "#", title: "Categories" },
   { href: "#", title: "Account", loggedIn: true },
 ];

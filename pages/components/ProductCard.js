@@ -1,6 +1,10 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { Rating } from "@mui/material";
+import Image from "next/image";
+import Skeleton from "@mui/material";
+import { Suspense } from "react";
+import NextImage from "./NextImage";
 const CardContainer = styled.div`
   width: 250px;
   margin: 20px;
@@ -9,6 +13,7 @@ const CardContainer = styled.div`
   border: 1px solid #e0e1dd;
   display: flex;
   flex-direction: column;
+  box-shadow: 2px 2px 20px -5px black;
 `;
 const CardContent = styled.div`
   display: flex;
@@ -25,12 +30,10 @@ const CardContent = styled.div`
 `;
 const ImageContainer = styled.div`
   min-width: 200px;
+  height: 150px;
   position: relative;
+  background: #cacec0;
 
-  img {
-    width: 100%;
-    background: #e0e1dd;
-  }
   button {
     background: white;
     border: none;
@@ -40,6 +43,7 @@ const ImageContainer = styled.div`
     height: 40px;
     width: 40px;
     border-radius: 50%;
+    z-index: 1;
   }
   svg {
     width: 30px;
@@ -64,7 +68,6 @@ const ButtonContainer = styled.div`
   justify-content: center;
 `;
 const ProductCard = ({ cardInfo }) => {
-  const rating = [1, 1, 1, 1];
   return (
     <CardContainer>
       <ImageContainer>
@@ -83,7 +86,9 @@ const ProductCard = ({ cardInfo }) => {
             />
           </svg>
         </button>
-        <img src="https://diego-next-ecommerce.s3.us-east-2.amazonaws.com/1679151719649.png" />
+
+        <NextImage src={cardInfo?.images[0]} alt="product image" height={150} />
+        {/* <Image src={cardInfo?.images[0]} alt="product image" fill /> */}
       </ImageContainer>
       <CardContent>
         <h2>{cardInfo?.name}</h2>

@@ -10,6 +10,18 @@ export default async function handler(req, res) {
     if (req.query?.id) {
       res.json(await Product.findOne({ _id: req.query.id }));
     }
+    if (req.query?.categoryIds) {
+      try {
+        const { categoryIds } = req.query;
+
+        const products = await Product.find({ category: { $in: categoryIds } });
+
+        res.status(200).json(products);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+      }
+    }
     res.json(await Product.find());
   }
 

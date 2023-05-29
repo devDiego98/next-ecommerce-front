@@ -8,6 +8,8 @@ import Register from "./RegisterForm";
 import { signOut, useSession } from "next-auth/react";
 import { Drawer } from "@mui/material";
 import Navbar from "./Navbar";
+import Image from "next/image";
+import Logo from "../../public/images/logo.png";
 const Nav = styled.nav`
   display: flex;
   flex-direction: column;
@@ -77,6 +79,19 @@ const DrawerContent = styled.span`
   flex-direction: column;
   gap: 20px;
 `;
+const LogoLink = styled(Link)`
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  span {
+    font-size: 24px;
+  }
+  img {
+    width: 50px;
+    height: 50px;
+    filter: invert(1) drop-shadow(2px 2px 8px black);
+  }
+`;
 
 const Header = () => {
   const { data: session } = useSession();
@@ -95,7 +110,10 @@ const Header = () => {
     <>
       <DesktopNavContainer>
         <Container>
-          <Link href={"#"}>Logo</Link>
+          <LogoLink href={"#"}>
+            <Image src={Logo} alt="logo" />
+            <span>MiTek</span>
+          </LogoLink>
           <DesktopNav>
             <Navbar session={session} openModal={openModal}></Navbar>
           </DesktopNav>

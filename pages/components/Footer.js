@@ -11,9 +11,7 @@ const FooterContainer = styled.footer`
   flex-direction: column;
   margin-top: 100px;
 `;
-const TopContainer = styled.footer`
-  width: 100vw;
-`;
+
 const BottomContainer = styled.div`
   width: 100vw;
 
