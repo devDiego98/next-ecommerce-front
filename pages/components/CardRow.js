@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import ProductCard from "./ProductCard";
 import { useSelector } from "react-redux";
@@ -19,13 +19,15 @@ const CardRow = ({ itemsperrow }) => {
   const products = useSelector((state) => state.products.value);
 
   return (
-    <FlexContainer>
-      {products.map((card, index) => (
-        <FlexItem key={index} itemsperrow={itemsperrow}>
-          <ProductCard cardInfo={card} />
-        </FlexItem>
-      ))}
-    </FlexContainer>
+    <>
+      <FlexContainer>
+        {products.map((card, index) => (
+          <FlexItem key={index} itemsperrow={itemsperrow}>
+            <ProductCard cardInfo={card} />
+          </FlexItem>
+        ))}
+      </FlexContainer>
+    </>
   );
 };
 

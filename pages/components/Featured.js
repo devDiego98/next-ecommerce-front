@@ -14,10 +14,6 @@ const BtnContainer = styled.div`
   flex-direction: row;
   gap: 20px;
   button {
-    background: #fff;
-    color: #222;
-    font-size: 20px;
-    border-radius: 8px;
     height: 50px;
     width: 200px;
     @media only screen and (max-width: 768px) {
@@ -71,6 +67,39 @@ const ImageCont = styled.div`
     height: auto;
   }
 `;
+
+const StyledButton = styled.button`
+  background-color: initial;
+  background-image: linear-gradient(-180deg, #545454, #000000);
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Inter, -apple-system, system-ui, Roboto, "Helvetica Neue", Arial,
+    sans-serif;
+  height: 40px;
+  line-height: 40px;
+  outline: 0;
+  overflow: hidden;
+  padding: 0 20px;
+  pointer-events: auto;
+  position: relative;
+  text-align: center;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  vertical-align: top;
+  white-space: nowrap;
+  width: 100%;
+  z-index: 9;
+  border: 0;
+  transition: box-shadow 0.2s;
+
+  &:hover {
+    box-shadow: rgba(253, 76, 0, 0.5) 0 3px 8px;
+  }
+`;
 const Featured = () => {
   return (
     <div>
@@ -93,8 +122,8 @@ const Featured = () => {
                 from Apple - order your MacBook Pro today!
               </p>
               <BtnContainer>
-                <button>Read More</button>
-                <button>Add to Cart</button>
+                <StyledButton>Read More</StyledButton>
+                <StyledButton>Add to Cart</StyledButton>
               </BtnContainer>
             </div>
             <ImageCont>
