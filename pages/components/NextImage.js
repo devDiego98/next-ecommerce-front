@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { Skeleton } from "@mui/material";
 import styled from "styled-components";
-
+import defaultProductImage from "../../public/images/defaultProductImage.png";
 const MySkeleton = styled(Skeleton)`
   position: absolute;
   top: 0;
@@ -13,13 +13,19 @@ const MySkeleton = styled(Skeleton)`
 `;
 const NextImage = ({ src, alt, width, height }) => {
   const [isLoaded, setIsLoaded] = useState(false);
-
   return (
     <>
       {!isLoaded && (
         <MySkeleton animation="wave" width={width} height={height} />
       )}
-      <Image src={src} alt={alt} fill onLoad={() => setIsLoaded(true)} />
+      <Image
+        src={src || defaultProductImage}
+        alt={alt}
+        sizes="200"
+        fill
+        onLoad={() => setIsLoaded(true)}
+        priority
+      />
     </>
   );
 };

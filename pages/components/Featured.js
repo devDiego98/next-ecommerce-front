@@ -2,6 +2,7 @@
 import React from "react";
 import styled from "styled-components";
 import Image from "next/image";
+import NextImage from "./NextImage";
 
 const Bg = styled.div`
   background-color: #222;
@@ -97,7 +98,7 @@ const Featured = () => {
               </BtnContainer>
             </div>
             <ImageCont>
-              <Image
+              <NextImage
                 alt="mac laptop"
                 src="https://diego-next-ecommerce.s3.us-east-2.amazonaws.com/1679151719649.png"
                 fill={true}

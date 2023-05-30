@@ -4,6 +4,7 @@ import logo from "../../public/images/logo.png";
 import handHoldingIphone from "../../public/images/hand-holding-phone.jpg";
 import darkLaptop from "../../public/images/laptops-dark.jpg";
 import Image from "next/image";
+import NextImage from "./NextImage";
 const StyledMainContainer = styled.div`
   display: flex;
   @media only screen and (max-width: 1300px) {
@@ -72,9 +73,12 @@ export default function LandingFirstSection() {
   return (
     <StyledMainContainer>
       <SectionOne>
-        <Image src={handHoldingIphone} alt="hand holding phone" fill />
+        <NextImage src={handHoldingIphone} alt="hand holding phone" fill />
         <Row>
-          <Image src={logo} alt="Logo" width={50} />
+          <div style={{ position: "relative", width: "60px", height: "50px" }}>
+            <NextImage src={logo} alt="Logo" width={50} />
+          </div>
+
           <h2>Trade In</h2>
         </Row>
         <Row>
@@ -85,9 +89,11 @@ export default function LandingFirstSection() {
         </Row>
       </SectionOne>
       <SectionTwo>
-        <Image src={darkLaptop} alt="hand holding phone" fill />
+        <NextImage src={darkLaptop} alt="hand holding phone" fill />
         <Row>
-          <Image src={logo} alt="Logo" width={50} />
+          <div style={{ position: "relative", width: "60px", height: "50px" }}>
+            <NextImage src={logo} alt="Logo" width={50} height={50} />
+          </div>
           <h2>ISurface Pro</h2>
         </Row>
         <Row>

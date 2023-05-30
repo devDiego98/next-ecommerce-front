@@ -32,8 +32,8 @@ const ImageContainer = styled.div`
   min-width: 200px;
   height: 150px;
   position: relative;
-  background: #cacec0;
-
+  background: #cacec02e;
+  box-shadow: 0px 5px 10px #0000004f;
   button {
     background: white;
     border: none;
@@ -88,7 +88,6 @@ const ProductCard = ({ cardInfo }) => {
         </button>
 
         <NextImage src={cardInfo?.images[0]} alt="product image" height={150} />
-        {/* <Image src={cardInfo?.images[0]} alt="product image" fill /> */}
       </ImageContainer>
       <CardContent>
         <h2>{cardInfo?.name}</h2>

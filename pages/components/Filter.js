@@ -97,7 +97,10 @@ const Filter = ({ showFilterDrawer, setShowFilterDrawer }) => {
 
   async function filterProducts() {
     let ids = searchCategories.map((cat) => cat._id);
-    let url = "/api/products?categoryId=" + ids[ids.length - 1];
+    let url = "/api/products";
+    if (ids[ids.length - 1]) {
+      url += "?categoryId=" + ids[ids.length - 1];
+    }
     if (radioFieldValues.current.length > 0) {
       radioFieldValues.current.map((property) => {
         let entries = [...Object.entries(property)];
@@ -117,7 +120,7 @@ const Filter = ({ showFilterDrawer, setShowFilterDrawer }) => {
   function handlePropertyFilters(products) {
     let properties = {};
 
-    products.forEach((product) => {
+    products?.forEach((product) => {
       if (product.properties) {
         Object.keys(product?.properties).forEach((key, index) => {
           if (!properties[key]) {
