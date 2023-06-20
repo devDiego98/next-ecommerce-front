@@ -31,7 +31,6 @@ export default function ProductInfoModal({
   setShowProductModal,
   cardInfo,
 }) {
-  console.log(cardInfo);
   return (
     <CardInfoModal
       open={showProductModal}

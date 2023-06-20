@@ -95,18 +95,22 @@ const Filter = ({ showFilterDrawer, setShowFilterDrawer }) => {
     }
   };
 
-  async function filterProducts() {
-    let ids = searchCategories.map((cat) => cat._id);
+  async function filterProducts(resetProducts = false) {
     let url = "/api/products";
-    if (ids[ids.length - 1]) {
-      url += "?categoryId=" + ids[ids.length - 1];
+    console.log(resetProducts);
+    if (!resetProducts) {
+      let ids = searchCategories.map((cat) => cat._id);
+      if (ids[ids.length - 1]) {
+        url += "?categoryId=" + ids[ids.length - 1];
+      }
+      if (radioFieldValues.current.length > 0) {
+        radioFieldValues.current.map((property) => {
+          let entries = [...Object.entries(property)];
+          url += `&properties.${entries[0][0]}=${entries[0][1]}`;
+        });
+      }
     }
-    if (radioFieldValues.current.length > 0) {
-      radioFieldValues.current.map((property) => {
-        let entries = [...Object.entries(property)];
-        url += `&properties.${entries[0][0]}=${entries[0][1]}`;
-      });
-    }
+    console.log(url);
     try {
       const response = await fetch(url);
       const data = await response.json();
@@ -138,7 +142,8 @@ const Filter = ({ showFilterDrawer, setShowFilterDrawer }) => {
   function clearFilters() {
     setAllCategories([parentCategories]);
     setSearchCategories([]);
-    setPropertyFilters({});
+    setPropertyFilters(null);
+    filterProducts(true);
     selectFieldValues.current = [];
     radioFieldValues.current = [];
   }
@@ -180,6 +185,7 @@ const Filter = ({ showFilterDrawer, setShowFilterDrawer }) => {
         })}
 
         {propertyFilters &&
+          searchCategories.length > 0 &&
           Object?.entries(propertyFilters)?.map(
             ([objKey, values], propertyIndex) => (
               <StyledPropertyContainer key={objKey}>
@@ -210,8 +216,8 @@ const Filter = ({ showFilterDrawer, setShowFilterDrawer }) => {
               </StyledPropertyContainer>
             )
           )}
-        <Button onClick={filterProducts}>Filter Products</Button>
-        <Button onClick={clearFilters}>Clear Filters</Button>
+        <Button onClick={() => filterProducts()}>Filter Products</Button>
+        <Button onClick={() => clearFilters(true)}>Clear Filters</Button>
       </FiltersDrawer>
     </Drawer>
   );
