@@ -34,7 +34,6 @@ const CartContainer = styled.span`
 const NavLinks = [
   { href: "/", title: "Home" },
   { href: "/products", title: "Products" },
-  { href: "#", title: "Categories" },
   { href: "#", title: "Account", loggedIn: true },
 ];
 

@@ -3,7 +3,6 @@ import styled from "styled-components";
 import logo from "../../public/images/logo.png";
 import handHoldingIphone from "../../public/images/hand-holding-phone.jpg";
 import darkLaptop from "../../public/images/laptops-dark.jpg";
-import Image from "next/image";
 import NextImage from "./NextImage";
 const StyledMainContainer = styled.div`
   display: flex;
@@ -36,11 +35,11 @@ const SectionTwo = styled.div`
   color: white;
   padding-top: 5%;
   &:hover {
-    transition: 2s;
+    transition: 1s;
     filter: invert(1);
   }
   &:not(:hover) {
-    transition: 2s;
+    transition: 1s;
     filter: invert(0);
   }
   img {

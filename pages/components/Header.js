@@ -10,19 +10,6 @@ import { Drawer } from "@mui/material";
 import Navbar from "./Navbar";
 import Image from "next/image";
 import Logo from "../../public/images/logo.png";
-const Nav = styled.nav`
-  display: flex;
-  flex-direction: column;
-  background-color: #222;
-  color: #fff;
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  right: 0;
-  transition: transform 0.3s ease-in-out;
-  transform: ${({ open }) => (open ? "translateX(0)" : "translateX(100%)")};
-`;
 
 const Hamburger = styled.button`
   display: none;
@@ -62,7 +49,6 @@ const DesktopNav = styled.div`
     }
   }
 `;
-const MobileNav = styled.nav``;
 const Container = styled.div`
   display: flex;
   align-items: center;
@@ -110,7 +96,7 @@ const Header = () => {
     <>
       <DesktopNavContainer>
         <Container>
-          <LogoLink href={"#"}>
+          <LogoLink href={"/"}>
             <Image src={Logo} alt="logo" />
             <span>MiTek</span>
           </LogoLink>

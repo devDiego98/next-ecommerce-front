@@ -17,13 +17,18 @@ const FlexItem = styled.div`
 
 const CardRow = ({ itemsperrow }) => {
   const products = useSelector((state) => state.products.value);
+  const favorites = useSelector((state) => state.userData.favorites);
+  console.log(favorites);
 
   return (
     <>
       <FlexContainer>
         {products.map((card, index) => (
           <FlexItem key={index} itemsperrow={itemsperrow}>
-            <ProductCard cardInfo={card} />
+            <ProductCard
+              cardInfo={card}
+              favorited={favorites.includes(card._id)}
+            />
           </FlexItem>
         ))}
       </FlexContainer>

@@ -3,17 +3,14 @@ import { createSlice } from "@reduxjs/toolkit";
 export const userDataSlice = createSlice({
   name: "userData",
   initialState: {
-    value: {
-      favorites: [],
-      cart: [],
-    },
+    favorites: [],
+    cart: [],
   },
   reducers: {
+    setFavorites: (state, action) => {
+      state.favorites = action.payload;
+    },
     addFavorite: (state, action) => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
       state.favorites.push(action.payload);
     },
     removeFavorite: (state) => {},
@@ -25,7 +22,12 @@ export const userDataSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addFavorite, removeFavorite, addToCart, removeFromCart } =
-  userDataSlice.actions;
+export const {
+  addFavorite,
+  removeFavorite,
+  addToCart,
+  removeFromCart,
+  setFavorites,
+} = userDataSlice.actions;
 
 export default userDataSlice.reducer;
