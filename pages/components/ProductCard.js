@@ -1,9 +1,11 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled from "@emotion/styled";
 import { Rating } from "@mui/material";
 import NextImage from "./NextImage";
 import ProductInfoModal from "./ProductInfoModal";
 import axios from "axios";
+import { addFavorite, removeFavorite } from "@/slices/userDataSlice";
+import { useDispatch } from "react-redux";
 const CardContainer = styled.button`
   &:hover {
     box-shadow: 2px 2px 20px black;
@@ -94,27 +96,31 @@ const HeartButton = styled.button`
 `;
 
 const ProductCard = ({ cardInfo, favorited }) => {
+  const dispatch = useDispatch();
   const [showProductModal, setShowProductModal] = useState(false);
   const [isHeartFilled, setIsHeartFilled] = useState(favorited);
-
+  useEffect(() => {
+    setIsHeartFilled(favorited);
+  }, [favorited]);
   const handleHeartClick = (e) => {
     e.stopPropagation();
     setIsHeartFilled(!isHeartFilled);
     if (!isHeartFilled) {
       //add to favorite
+      dispatch(addFavorite(cardInfo._id));
       axios.post("/api/users/favorites", {
         id: cardInfo._id,
         user: "646fdfef7e10199e628973de",
         remove: false,
       });
     } else {
+      dispatch(removeFavorite(cardInfo._id));
       axios.post("/api/users/favorites", {
         id: cardInfo._id,
         user: "646fdfef7e10199e628973de",
         remove: true,
       });
     }
-    console.log(cardInfo);
   };
 
   return (
@@ -148,11 +154,13 @@ const ProductCard = ({ cardInfo, favorited }) => {
           <Rating name="read-only" value={2.5} readOnly precision={0.5} />
         </CardContent>
       </CardContainer>
-      <ProductInfoModal
-        showProductModal={showProductModal}
-        setShowProductModal={setShowProductModal}
-        cardInfo={cardInfo}
-      />
+      {showProductModal && (
+        <ProductInfoModal
+          showProductModal={showProductModal}
+          setShowProductModal={setShowProductModal}
+          cardInfo={cardInfo}
+        />
+      )}
     </>
   );
 };

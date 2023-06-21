@@ -97,7 +97,7 @@ const StyledButton = styled.button`
   transition: box-shadow 0.2s;
 
   &:hover {
-    box-shadow: rgba(253, 76, 0, 0.5) 0 3px 8px;
+    box-shadow: rgb(179 8 235 / 50%) 0 3px 8px;
   }
 `;
 const Featured = () => {

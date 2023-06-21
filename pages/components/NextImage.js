@@ -11,7 +11,15 @@ const MySkeleton = styled(Skeleton)`
   bottom: 0;
   transform: scale(1) !important;
 `;
-const NextImage = ({ src, alt, width, height, imageWidth, imageHeight }) => {
+const NextImage = ({
+  src,
+  alt,
+  width,
+  height,
+  imageWidth,
+  imageHeight,
+  style,
+}) => {
   const [isLoaded, setIsLoaded] = useState(false);
   return (
     <>
@@ -27,6 +35,7 @@ const NextImage = ({ src, alt, width, height, imageWidth, imageHeight }) => {
         fill={!imageWidth && !imageHeight}
         onLoad={() => setIsLoaded(true)}
         priority
+        style={style}
       />
     </>
   );
