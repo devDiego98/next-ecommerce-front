@@ -7,6 +7,9 @@ const FlexContainer = styled.div`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  max-width: 1300px;
+  margin: auto;
+  gap: 16px;
 `;
 
 const FlexItem = styled.div`
@@ -18,7 +21,6 @@ const FlexItem = styled.div`
 const CardRow = ({ itemsperrow }) => {
   const products = useSelector((state) => state.products.value);
   const favorites = useSelector((state) => state.userData.favorites);
-  // console.log(favorites);
 
   return (
     <>

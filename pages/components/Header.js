@@ -34,7 +34,8 @@ const MenuIcon = styled.span`
 const DesktopNavContainer = styled.div`
   background: #222;
   color: #fff;
-  background:#222 nav {
+  background: #222;
+  nav {
     display: flex;
   }
   a {

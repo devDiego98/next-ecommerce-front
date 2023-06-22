@@ -40,7 +40,13 @@ export const userDataSlice = createSlice({
       state.cart.items[index].quantity = action.payload.quantity;
       state.cart.total = calculateCartTotal(state.cart.items);
     },
-    removeFromCart: (state, action) => {},
+    removeFromCart: (state, action) => {
+      let index = state.cart.items.findIndex(
+        (item) => item._id === action.payload._id
+      );
+      state.cart.items.splice(index, 1);
+      state.cart.total = calculateCartTotal(state.cart.items);
+    },
   },
 });
 function calculateCartTotal(products) {

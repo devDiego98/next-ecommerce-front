@@ -16,7 +16,6 @@ const CardContainer = styled.button`
   }
   width: 200px;
   height: 275px;
-  margin: 20px;
   border-radius: 8px;
   overflow: hidden;
   border: 1px solid #e0e1dd;

@@ -68,7 +68,7 @@ const Products = () => {
           </svg>
         </button>
       </FilterRow>
-      <CardRow itemsperrow={5} />
+      <CardRow itemsperrow={6} />
       <Filter
         setShowFilterDrawer={setShowFilterDrawer}
         showFilterDrawer={showFilterDrawer}

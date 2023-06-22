@@ -2,11 +2,25 @@ import React, { useState } from "react";
 import styled from "@emotion/styled";
 import { useDispatch } from "react-redux";
 import { debounce } from "lodash";
-import { addToCart, updateQuantity } from "@/slices/userDataSlice";
+import {
+  addToCart,
+  removeFromCart,
+  updateQuantity,
+} from "@/slices/userDataSlice";
 import { useEffect, useRef } from "react";
+import {
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogActions,
+  Snackbar,
+} from "@mui/material";
 export default function Counter({ item, cartCounter }) {
   const dispatch = useDispatch();
   const [counter, setCounter] = useState(item?.quantity || 1);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+
   const incrementDebounceRef = useRef(null);
   const decrementDebounceRef = useRef(null);
   const StyledCounterContainer = styled.div`
@@ -27,6 +41,7 @@ export default function Counter({ item, cartCounter }) {
   `;
   const Wrapper = styled.div`
     display: flex;
+    align-items: center;
     gap: 8px;
     .addToCart {
       padding: 8px 16px;
@@ -36,6 +51,9 @@ export default function Counter({ item, cartCounter }) {
       font-size: 16px;
       color: white;
       font-weight: bold;
+      &:hover {
+        background: #00d0ff9e;
+      }
     }
   `;
   const debounceIncrement = () => {
@@ -65,6 +83,7 @@ export default function Counter({ item, cartCounter }) {
         decrementDebounceRef.current();
         return newCounter;
       });
+    } else {
     }
   };
   const updateProductQuantityDebounced = debounce((newCounter) => {
@@ -79,11 +98,18 @@ export default function Counter({ item, cartCounter }) {
   }, 300);
 
   const updateProductQuantity = () => {
+    !snackbarOpen && setSnackbarOpen(true);
     updateProductQuantityDebounced(counter);
   };
 
   return (
     <Wrapper>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000} // Adjust the duration as needed
+        onClose={() => setSnackbarOpen(false)}
+        message="Product added successfully!"
+      />
       <StyledCounterContainer>
         <button
           onClick={() =>
@@ -95,16 +121,51 @@ export default function Counter({ item, cartCounter }) {
         <div className="quantity">{counter}</div>
         <button
           onClick={() =>
-            cartCounter ? debounceDecrement() : setCounter((prev) => prev - 1)
+            cartCounter
+              ? debounceDecrement()
+              : setCounter((prev) => {
+                  if (prev !== 1) {
+                    return prev - 1;
+                  } else return prev;
+                })
           }
         >
           -
         </button>
       </StyledCounterContainer>
+      {cartCounter && (
+        <button type="button" onClick={() => setDeleteDialogOpen(true)}>
+          Delete
+        </button>
+      )}
       {!cartCounter && (
         <button className="addToCart" onClick={updateProductQuantity}>
           Add To Cart
         </button>
+      )}
+
+      {cartCounter && (
+        <div>
+          <Dialog
+            open={deleteDialogOpen}
+            onClick={() => setDeleteDialogOpen(false)}
+            aria-describedby="alert-dialog-slide-description"
+          >
+            <DialogTitle>{`Are you sure you want to delete ${item.name}?`}</DialogTitle>
+
+            <DialogActions>
+              <Button onClick={() => setDeleteDialogOpen(false)}>Close</Button>
+              <Button
+                onClick={() => {
+                  setDeleteDialogOpen(false);
+                  dispatch(removeFromCart(item._id));
+                }}
+              >
+                Delete
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
       )}
     </Wrapper>
   );
