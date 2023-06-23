@@ -5,7 +5,7 @@ import Link from "next/link";
 import LoginForm from "./LoginForm";
 import { Modal, ModalDialog, ModalClose } from "@mui/joy";
 import Register from "./RegisterForm";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { Drawer } from "@mui/material";
 import Navbar from "./Navbar";
 import Image from "next/image";
@@ -56,7 +56,7 @@ const Container = styled.div`
   justify-content: space-between;
   max-width: 1400px;
   margin: auto;
-  padding: 20px;
+  padding: 0 20px;
 `;
 
 const DrawerContent = styled.span`
@@ -74,8 +74,9 @@ const LogoLink = styled(Link)`
     font-size: 24px;
   }
   img {
-    width: 50px;
-    height: 50px;
+    margin: 5px 0;
+    width: 40px;
+    height: 40px;
     filter: invert(1) drop-shadow(2px 2px 8px black);
   }
 `;

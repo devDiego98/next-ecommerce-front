@@ -144,7 +144,13 @@ const ProductCard = ({ cardInfo, favorited }) => {
           <NextImage
             src={cardInfo?.images[0]}
             alt="product image"
-            height={150}
+            style={{
+              maxWidth: "100%",
+              maxHeight: "100%",
+              objectFit: "contain",
+              background: "white",
+              padding: "10px",
+            }}
           />
         </ImageContainer>
         <CardContent>

@@ -20,12 +20,24 @@ const Nav = styled.nav`
 const NavItem = styled(Link)`
   display: flex;
   align-items: center;
-  padding: 1rem;
+  padding: 0 1rem;
   text-align: center;
   text-decoration: none;
-
+  position: relative;
+  &:after {
+    content: "";
+    position: absolute;
+    height: 2px;
+    background: white;
+    left: 20%;
+    right: 100%;
+    bottom: 0;
+    transition: 0.5s;
+  }
   &:hover {
-    background-color: #444;
+    &:after {
+      right: 20%;
+    }
   }
 `;
 const CartContainer = styled.span`

@@ -17,14 +17,15 @@ const ItemsColumn = styled.div`
   flex: 3;
 `;
 const FinishPurchaseContainer = styled.div`
+  background: white;
   flex: 1;
-  padding-left: 48px;
   border-left: 1px solid gray;
+  padding: 20px 0 0 48px;
 `;
 
 const ItemWrapper = styled.div`
   display: flex;
-  padding: 16px 0 16px 16px;
+  padding: 16px 0 40px 16px;
   gap: 16px;
   border-top: 1px solid gray;
 
@@ -39,7 +40,12 @@ const ItemWrapper = styled.div`
   .itemContainer {
     width: 100px;
     height: 100px;
+    background: white;
     position: relative;
+    border-radius: 4px;
+  }
+  img {
+    padding: 10px;
   }
   .property {
     color: grey;
@@ -57,10 +63,6 @@ const ItemWrapper = styled.div`
 `;
 
 export default function Cart() {
-  // const stripePromise = loadStripe(
-  //   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-  // );
-  const router = useRouter();
   const cart = useSelector((state) => state.userData.cart);
   const handleCheckout = async () => {
     console.log(cart.items);
@@ -71,7 +73,6 @@ export default function Cart() {
       };
     });
     const res = await axios.post("/api/checkout_sessions", line_items);
-    console.log(res);
     window.location.href = res.data.session.url;
   };
   return (
@@ -123,7 +124,17 @@ export default function Cart() {
           </ItemsColumn>
           <FinishPurchaseContainer>
             <h2>Finalize Purchase</h2>
-            <div>Total: ${cart.total}</div>
+            <div>
+              Products({cart.items.length}) ${cart.total}
+              <sup>00</sup>
+            </div>
+
+            <div>
+              Shipping <span className="shipping">Free</span>
+            </div>
+            <div>
+              Total: <b>${cart.total}</b>
+            </div>
 
             <button type="button" onClick={handleCheckout}>
               Checkout

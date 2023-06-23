@@ -2,7 +2,13 @@ import React, { useState, useEffect, useRef } from "react";
 import { Button, Drawer } from "@mui/material";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { Select, MenuItem, FormControl, InputLabel } from "@mui/material";
+import {
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  TextField,
+} from "@mui/material";
 import { setAllProducts } from "@/slices/productsSlice";
 const FiltersDrawer = styled.div`
   min-width: 40vw;
@@ -14,6 +20,9 @@ const FiltersDrawer = styled.div`
 const StyledSelectTag = styled(Select)`
   min-width: 200px;
   margin-bottom: 16px;
+  label {
+    background: white !important;
+  }
 `;
 const StyledPropertyContainer = styled.div`
   width: 100%;
@@ -165,12 +174,12 @@ const Filter = ({ showFilterDrawer, setShowFilterDrawer }) => {
                 width: `calc(100% - ${index * 3}%)`,
               }}
             >
-              <InputLabel>Select Category</InputLabel>
+              <InputLabel id={index}>Select Category</InputLabel>
               <StyledSelectTag
                 value={selectFieldValues.current[index] || ""}
                 onChange={(res) => handleChange(res.target, index)}
-                label={categoriesSelect.name}
-                labelId={categoriesSelect.name}
+                label={"Select Category"}
+                labelId={index}
               >
                 <MenuItem value="">-Select-</MenuItem>
                 {categoriesSelect?.map((option, optionIndex) => {
