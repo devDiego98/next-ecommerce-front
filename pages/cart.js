@@ -6,6 +6,8 @@ import NextImage from "./components/NextImage";
 import Counter from "./components/Counter";
 import EmptyCart from "./components/EmptyCart";
 import { loadStripe } from "@stripe/stripe-js";
+import axios from "axios";
+import { useRouter } from "next/router";
 const CartWrapper = styled.div`
   display: flex;
 `;
@@ -55,10 +57,23 @@ const ItemWrapper = styled.div`
 `;
 
 export default function Cart() {
-  const stripePromise = loadStripe(
-    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-  );
+  // const stripePromise = loadStripe(
+  //   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+  // );
+  const router = useRouter();
   const cart = useSelector((state) => state.userData.cart);
+  const handleCheckout = async () => {
+    console.log(cart.items);
+    let line_items = cart.items.map((item) => {
+      return {
+        price: item.stripe_price_id,
+        quantity: item.quantity,
+      };
+    });
+    const res = await axios.post("/api/checkout_sessions", line_items);
+    console.log(res);
+    window.location.href = res.data.session.url;
+  };
   return (
     <Layout>
       {cart.items.length > 0 ? (
@@ -109,9 +124,10 @@ export default function Cart() {
           <FinishPurchaseContainer>
             <h2>Finalize Purchase</h2>
             <div>Total: ${cart.total}</div>
-            <form action="/api/checkout_sessions" method="POST">
-              <button>Checkout</button>
-            </form>
+
+            <button type="button" onClick={handleCheckout}>
+              Checkout
+            </button>
           </FinishPurchaseContainer>
         </CartWrapper>
       ) : (
