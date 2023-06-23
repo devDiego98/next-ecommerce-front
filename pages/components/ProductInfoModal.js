@@ -29,11 +29,11 @@ const ImageContainer = styled.div`
   @media only screen and (max-width: 500px) {
     height: auto;
   }
-  img {
+  /* img {
     width: 100% !important;
     position: relative !important;
     height: auto !important;
-  }
+  } */
 `;
 const CardInfoModal = styled(Modal)`
   padding: 50px 10px;
@@ -54,8 +54,9 @@ const InfoContainer = styled.div`
     font-size: 20px;
   }
   .desc {
-    font-size: 16px;
+    font-size: 14px;
     margin-bottom: 48px;
+    font-weight: 100;
   }
 `;
 const ModalContent = styled.div`
@@ -79,23 +80,30 @@ export default function ProductInfoModal({
           <ModalClose />
           <Row>
             <ImageContainer>
-              <NextImage src={cardInfo.images[0]} alt={cardInfo.name} />
+              <img
+                src={cardInfo.images[0]}
+                alt={cardInfo.name}
+                style={{ objectFit: "contain", height: "100%" }}
+              />
             </ImageContainer>
             <InfoContainer>
               <h1 className="title">{cardInfo.name}</h1>
               <p className="price">${cardInfo.price}</p>
               <p className="desc">{cardInfo.desc}</p>
               {cardInfo?.properties && (
-                <p className="properties">
-                  {Object?.entries(cardInfo?.properties).map((property) => {
-                    return (
-                      <div>
-                        <span className="property-key">{property[0]}</span>
-                        <span className="property-value">{property[1]}</span>
-                      </div>
-                    );
-                  })}
-                </p>
+                <>
+                  <h4>Properties</h4>
+                  <p className="properties">
+                    {Object?.entries(cardInfo?.properties).map((property) => {
+                      return (
+                        <div>
+                          <span className="property-key">{property[0]}: </span>
+                          <span className="property-value">{property[1]}</span>
+                        </div>
+                      );
+                    })}
+                  </p>
+                </>
               )}
               <Counter item={cardInfo} />
             </InfoContainer>

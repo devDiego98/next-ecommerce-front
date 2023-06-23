@@ -1,3 +1,7 @@
+@font-face {
+  font-family: "SF Pro Display";
+  src: url(../public/fonts/SFPRODISPLAYREGULAR.OTF);
+}
 :root {
   --max-width: 1100px;
   --border-radius: 12px;
@@ -108,7 +112,8 @@ a {
   }
 }
 * {
-  font-family: "Montserrat";
+  font-family: "SF Pro Display", "SF Pro Icons", "Helvetica Neue", "Helvetica",
+    "Arial", sans-serif;
 }
 button {
   cursor: pointer;

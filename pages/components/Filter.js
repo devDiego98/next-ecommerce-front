@@ -55,6 +55,7 @@ const Filter = ({ showFilterDrawer, setShowFilterDrawer }) => {
     if (category.value !== "") {
       let { value: cat } = category;
       cat = JSON.parse(cat);
+      console.log(cat);
       setNewSubCategories(cat._id, index);
 
       let newSearchCategories = [...searchCategories];
