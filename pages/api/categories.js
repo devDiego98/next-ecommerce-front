@@ -10,10 +10,9 @@ export default async function handler(req, res) {
   if (method === "GET") {
     try {
       if (req.query?.fetchChildren) {
-        let id = new ObjectId(req.query.id);
         const categories = await Category.find({
           $expr: {
-            $eq: [{ $arrayElemAt: ["$parentCategory", -1] }, id],
+            $eq: [{ $arrayElemAt: ["$parentCategory", -1] }, req.query.id],
           },
         });
         res.json(categories);
